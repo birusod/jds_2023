@@ -26,6 +26,13 @@ Data attributes:
 
 ### Wrangling and Viz
 
+<b>Final plot:</b> <br>
+
+<p align="center">
+  <img src="byseason.jpeg" width="60%">
+</p>
+
+<br>
 For this testing, I only used TidierPlots for vizualisation.
 The options are limited for now
 

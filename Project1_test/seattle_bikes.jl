@@ -204,7 +204,7 @@ ggplot(
     theme_light()
 
 
-ggplot(
+bs = ggplot(
     bydir,
     @aes(x = direction, y = total, color = direction)) +
     geom_col() +
@@ -216,12 +216,15 @@ ggplot(
     theme_light()
 
 
+    
+# using Plots
+#savefig(bs,"byseason.png") 
+
 #  facetting  not working!
 ggplot(
     daydir,
     @aes(x = day, y = total, color = direction)) +
     geom_col() +
-    facet_wrap(~direction) +
     labs(
         x = "", y = "",
         color = "Direction",
