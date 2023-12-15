@@ -1,16 +1,6 @@
-# Julia Data Science Github Project
-## Year: 2024
-## Author: Birusod
-## Project: R Tidytuesday with Julia
-
-
-
-*** 
-
-Weekly  template
-# Titlle
-- **Data published date: **
-- **Tidytuesday Week: **
+# Holiday MOvies
+- **Data published date: 2023-12-12**
+- **Tidytuesday Week: 50**
 ***
 <br>
 
