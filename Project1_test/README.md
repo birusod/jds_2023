@@ -26,4 +26,7 @@ Data attributes:
 
 ### Wrangling and Viz
 
+For this testing, I only used TidierPlots for vizualisation.
+The options are limited for now
+
 ### Insights

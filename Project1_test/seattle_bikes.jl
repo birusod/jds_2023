@@ -1,7 +1,8 @@
 # Seattle Bike Counters:
 # week-14
+# = +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-# Pkgs 
+# Pkgs ====================================================
 ## Standard
 using Downloads, Dates, Statistics
 
@@ -10,7 +11,7 @@ using CSV, DataFrames, CategoricalArrays
 using Tidier, Chain
 
 
-# Load Data
+# Load Data ===============================================
 
 url_data = "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-04-02/bike_traffic.csv"
 df_raw = CSV.File(Downloads.download(url_data)) |> DataFrame;
@@ -20,7 +21,7 @@ df_raw |> describe
 df_raw |> nrow
 
 
-# Data wrangling
+# Data wrangling  ==========================================
 
 df_raw
 describe(df_raw, :eltype)
@@ -86,8 +87,8 @@ df = @chain df2 begin
         bike = bike_count, 
         ped =  ped_count)
 end
-
-# EDA
+df
+# EDA ======================================================
 
 # yearly  bike  count:
 
@@ -142,29 +143,91 @@ daily_bikes_count = @chain df begin
 end
 daily_bikes_count
 
-
-
+# julia  factors
 dy = ["Wed", "Mon", "Tue", "Wed", "Mon", "Tue", "Fri"]
 dy = CategoricalArray(dy)
-dy
 levels!(dy, ["Mon", "Tue", "Wed", "Fri"])
 
 
-# Viz
+# By Direction
+combine(
+    groupby(df, :direction),
+    :bike => sum ∘ skipmissing => :total)
 
+bydir = @chain df begin
+    @group_by(direction)
+    @summarise(total = sum(skipmissing(bike)))
+end
+
+combine(
+    groupby(df, [:direction, :day]),
+    :bike => sum ∘ skipmissing => :total)
+
+daydir = @chain df begin
+    @group_by(direction, day)
+    @summarise(total = sum(skipmissing(bike)))
+    @ungroup()
+end
+
+
+# Viz =====================================================
 
 ggplot(
     yearly_bikes_count, 
-    aes(x = "year", y = "total")) + 
-    geom_col()
+    aes(x = :year, y = :total)) + 
+    geom_col() +
+    labs(
+        x = "", y = "",
+        title = "Number of Bikes Counted",
+        subtitle  = "Yearly Total From 2013 To 2019") +
+    theme_light()
 
 ggplot(
     monthly_bikes_count, 
     aes(x = "month", y = "total")) + 
-    geom_col()
+    geom_col() +
+    labs(
+        x = "", y = "",
+        title = "Number of Bikes Counted",
+        subtitle  = "Monthly Total From 2013 To 2019") +
+    theme_light()
 
 
 ggplot(
     daily_bikes_count, 
     aes(x = "day", y = "total")) + 
-    geom_col()
+    geom_col() +
+    labs(
+        x = "", y = "",
+        title = "Number of Bikes Counted",
+        subtitle  = "Daily Total From 2013 To 2019") +
+    theme_light()
+
+
+ggplot(
+    bydir,
+    @aes(x = direction, y = total, color = direction)) +
+    geom_col() +
+    labs(
+        x = "", y = "",
+        color = "Direction",
+        title = "Number of Bikes Counted",
+        subtitle  = "Total By Direction From 2013 To 2019") +
+    theme_light()
+
+
+#  facetting  not working!
+ggplot(
+    daydir,
+    @aes(x = day, y = total, color = direction)) +
+    geom_col() +
+    facet_wrap(~direction) +
+    labs(
+        x = "", y = "",
+        color = "Direction",
+        title = "Number of Bikes Counted",
+        subtitle  = "Total By Direction From 2013 To 2019") +
+    theme_light()
+
+
+daydir
