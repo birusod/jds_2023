@@ -25,7 +25,7 @@ Data attributes:
 <b>Final plot:</b> <br>
 
 <p align="center">
-  <img src="final.jpeg" width="60%">
+  <img src="finalplot.png" width="60%">
 </p>
 
 <br>

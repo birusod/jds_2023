@@ -241,6 +241,26 @@ data(dd) *
     mapping(:type => "", :rating, color = :type => (t -> "Type " * t ) => "TYPES") * 
     visual(BoxPlot) |> draw
 
+with_theme(
+    theme_minimal(); 
+    Axis = (; 
+    bottomspinecolor = :grey, 
+    leftspinecolor = :white,
+    title = "Rating Distribution By Type",
+    titlecolor = :firebrick, # using Makie.jl's symbols
+    titlefont = "Roboto",
+    xticklabelcolor = :white,
+    titlesize = 30),
+    palettes = (color =  mycolors,)
+    ) do
+    data(dd) * 
+    mapping(
+        :type => "", 
+        :rating => "Average Rating", 
+        color = :type => (t -> "Type " * t ) => "TYPES") * 
+    visual(BoxPlot) |> draw
+end
+
 # type: violin side = :v_cat, color = :v_cat
 with_theme(
     theme_minimal(); 
@@ -312,7 +332,5 @@ with_theme(
     mapping(:genres => "", :avg  => "Average") * 
     visual(BarPlot) |> draw
 end
-
-
 
 # save("figure.png", fig, px_per_unit = 3) # save high-resolution png
