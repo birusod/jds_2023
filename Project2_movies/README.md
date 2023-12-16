@@ -1,4 +1,4 @@
-# Holiday MOvies
+# Holiday Movies
 - **Data published date: 2023-12-12**
 - **Tidytuesday Week: 50**
 ***
